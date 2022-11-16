@@ -2,9 +2,14 @@ import express from 'express';
 import fileUpload from 'express-fileupload';
 import path from 'path';
 import url from 'url';
+import fs from 'fs';
 
 const app = express();
 const port = process.env.PORT;
+
+// *** CONSTANT DECLARATION ***
+
+const uploadPath = '/upload/';
 
 // *** EXPRESS URL RESOLUTION STUFF ***
 
@@ -24,6 +29,11 @@ app.get('/*', (req, res) => {
     fsend(res, 'html/login.html');
   } 
   
+  // New User Page
+  else if (req.path == '/register') {
+    fsend(res, 'html/newUser.html');
+  } 
+
   // Cannot resolve path
   else res.send('Invalid path ' + req.path + '!');
 });
@@ -82,4 +92,19 @@ function fsend(res, file) {
 function getDirname() {
   const filename = url.fileURLToPath(import.meta.url);
   return path.dirname(filename);
+}
+
+/**
+ * Turns the uploaded filename into a randomly generated filename
+ * @param {*} fin Uploaded starter filename
+ * @returns A new name for the file to be stored
+ */
+function generateUploadName(fin) {
+  const ext = fin.substring(fin.lastIndexOf('.')+1, filename.length);
+
+  let serial = '';
+
+  for (let i = 0; i < 8; i++) {
+
+  }
 }
