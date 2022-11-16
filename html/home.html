@@ -1,16 +1,68 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Photo Gallery 317</title>
+        <style>
+            button {
+                position: relative;
+                background-color: #31b0ff;
+                color: rgb(255, 255, 255);
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                border-radius: 40px;
+                cursor: pointer;
+                width: 100%;
+                transition: 0.08s ease-in;
+                -o-transition: 0.08s ease-in;
+                -ms-transition: 0.08s ease-in;
+                -moz-transition: 0.08s ease-in;
+                -webkit-transition: 0.08s ease-in;
+            }
+            
+            button:hover {
+                color: rgb(13, 126, 255)
+            }
+            
+            button:before {
+                content: "";
+                position: absolute;
+                background: #31b0ff;
+                opacity: 0;
+                border-radius: 40px;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                top: 100%;
+                z-index: -1;
+                -webkit-transition: top 0.09s ease-in;
+            }
+            
+            button:hover:before {
+                top: 0;
+                opacity: 1;
+            }
+            
+            button:hover {
+                opacity: .8;
+            }
+        </style>
     </head>
-    <body>
-        <h>This is the home page!</h>
+    <body style="background-color: rgb(172, 210, 249);">
+        <h1 style="color:black">Upload a Photo</h1>
 
         <!-- This is a dummyframe to avoid redirects when an upload occurs -->
         <iframe name="dummy" id="dummy" style="display: none;"></iframe>
 
         <form action="/upload" method="POST" enctype="multipart/form-data" target="dummy">
             <input type="file" name="image" />
-            <button type="submit">Upload</button>
+            <button type="submit" class="uploadBtn">Upload</button>
+        </form>
+
+        <form action="login.html">
+            <button type="submit" class="logoutBtn">Log Out</button>
         </form>
     </body>
+
+    
 </html>
