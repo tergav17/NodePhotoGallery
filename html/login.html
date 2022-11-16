@@ -1,8 +1,77 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Photo Gallery 317</title>
-    </head>
-    <body>
-        <h>This is the login page</h>
-    </body>
+
+<head>
+    <title>Photo Gallery 317</title>
+    <style>
+        button {
+            position: relative;
+            background-color: #31b0ff;
+            color: rgb(255, 255, 255);
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.08s ease-in;
+            -o-transition: 0.08s ease-in;
+            -ms-transition: 0.08s ease-in;
+            -moz-transition: 0.08s ease-in;
+            -webkit-transition: 0.08s ease-in;
+        }
+        
+        button:hover {
+            color: rgb(13, 126, 255)
+        }
+        
+        button:before {
+            content: "";
+            position: absolute;
+            background: #31b0ff;
+            opacity: 0;
+            border-radius: 40px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 100%;
+            z-index: -1;
+            -webkit-transition: top 0.09s ease-in;
+        }
+        
+        button:hover:before {
+            top: 0;
+            opacity: 1;
+        }
+        
+        button:hover {
+            opacity: .8;
+        }
+    </style>
+</head>
+
+<body style="background-color: rgb(172, 210, 249);">
+
+    <h1 style="color:black">Login</h1>
+
+    <label for="uname"><b style="color:black">Username</b></label>
+    <input id="usName" type="text" placeholder="Enter Username" name="uname" required>
+
+    <label for="upass"><b style="color:black">Username</b></label>
+    <input id="uPass" type="text" placeholder="Enter Password" name="upass" required>
+
+    <!-- <label for="psw"><b style="color:black">Password</b></label> -->
+    <!-- <input type="password" placeholder="Enter Password" name="psw" required> -->
+
+    <form action="index.html">
+        <button type="submit" class="loginBtn">Login</button>
+    </form>
+    <form action="index.html">
+        <button type="submit" class="newUser">New User</button>
+    </form>
+
+
+
+</body>
+
 </html>
