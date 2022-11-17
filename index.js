@@ -144,7 +144,7 @@ app.post('/*', (req, res) => {
       return res.redirect('/error');
     }
 
-    console.log("Recieved an image for user " + username + " with tages " + req.body.tags);
+    console.log("Received an image for user " + username + " with tags: " + req.body.tags);
 
     // Move it to the uploads directory
     const uploadName = generateUploadName(image.name)
