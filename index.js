@@ -11,6 +11,10 @@ const port = process.env.PORT;
 
 const uploadPath = '/upload';
 
+// *** SETUP JSON OBJECTS ***
+
+
+
 // *** EXPRESS URL RESOLUTION STUFF ***
 
 app.use(fileUpload());
@@ -92,6 +96,8 @@ function fsend(res, file) {
 }
 
 // *** LOGIN SERVICE STUFF ***
+
+// *** GENERAL UTILITY FUNCTIONS ***
 
 /**
  * Returns the directory path of the server
