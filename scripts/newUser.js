@@ -4,7 +4,7 @@ function register(){
     let passwordInput  = document.getElementById("uPass");	
     let passwordInputConf  = document.getElementById("uPassConf");	
 	
-	if (passwordInput.value == passwordInputConf.value) fetch("/new", {
+	if (passwordInput.value == passwordInputConf.value) fetch("/post/register", {
 		method: "POST",
 		headers: {'Content-Type': 'application/json'}, 
 		body: "{ \"username\": \"" + userNameInput.value + "\", \"password\": \"" + passwordInput.value + "\" }"
