@@ -11,6 +11,7 @@ const port = process.env.PORT;
 
 const uploadPath = '/upload';
 const jsonPath = '/json';
+const scriptPath = '/script';
 
 // *** GLOBAL DECLARATION ***
 
@@ -57,7 +58,14 @@ app.get('/*', (req, res) => {
   else if (req.path.startsWith('/u/')) {
     const imgName = req.path.substring(3);
 
-    fsend(res, 'upload/' + imgName);
+    fsend(res, uploadPath + imgName);
+  }
+
+  // Serve a Script
+  else if (req.path.startsWith('/src/')) {
+    const scriptName = req.path.substring(3);
+
+    fsend(res, scriptPath + scriptName);
   }
 
   // Cannot resolve path
@@ -140,11 +148,12 @@ function checkUserPassword(uname, pass) {
 }
 
 /**
- * 
- * @param {*} uname 
- * @param {*} pass 
+ * Authenticates a user, adds a token, and returns it
+ * @param {*} uname Username
  */
-function authenticateUser(uname, pass) {
+function authenticateUser(uname) {
+  let rand = Math.floor(Math.random() * 1000000000);
+
 
 }
 
