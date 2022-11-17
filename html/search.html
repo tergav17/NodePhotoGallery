@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <script src="src/search.js"></script>
     <title>Photo Gallery 317</title>
     <style>
         body{
@@ -57,14 +58,14 @@
         <h1 style="color:black">Search</h1>
 
         <!-- TODO Set appropriate end point -->
-        <form action="/">
-            <label for="searchprompt" style="color:black">Search for... </label>
-            <input id="searchprompt" type="text" placeholder="Enter Query" name="searchprompt" required>
-            <button type="submit" class="searchBtn">Search</button>
-        </form>
+        
+        <label for="searchPrompt" style="color:black">Search for... </label>
+        <input id="searchPrompt" type="text" placeholder="Enter Query" name="searchPrompt" required>
+        <button class="searchFor" onClick="search()">Search</button>
+       
     </div>
 
-    <div class="searchResultContent">
+    <div id="searchResultContent">
         <!-- TODO Embed JS here to display query results as images, looping over the values given -->
     </div>
 </body>
