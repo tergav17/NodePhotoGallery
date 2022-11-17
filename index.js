@@ -13,7 +13,7 @@ const port = process.env.PORT;
 
 const uploadPath = '/upload';
 const jsonPath = '/json';
-const scriptPath = '/script';
+const scriptPath = '/scripts';
 
 // *** GLOBAL DECLARATION ***
 
@@ -69,7 +69,7 @@ app.get('/*', (req, res) => {
 
   // Serve a Script
   else if (req.path.startsWith('/src/')) {
-    const scriptName = req.path.substring(3);
+    const scriptName = req.path.substring(4);
 
     fsend(res, scriptPath + scriptName);
   }
