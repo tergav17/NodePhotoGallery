@@ -34,6 +34,13 @@ app.get('/*', (req, res) => {
     fsend(res, 'html/newUser.html');
   } 
 
+  // Serve an Image
+  else if (req.path.startsWith('/u/')) {
+    const imgName = req.path.substring(3);
+
+    fsend(res, 'upload/' + imgName);
+  }
+
   // Cannot resolve path
   else res.send('Invalid path ' + req.path + '!');
 });
@@ -84,7 +91,7 @@ function fsend(res, file) {
   res.sendFile(path.join(dirname, '/' + file));
 }
 
-// *** GENERAL UTILITY FUNCTIONS ***
+// *** LOGIN SERVICE STUFF ***
 
 /**
  * Returns the directory path of the server
