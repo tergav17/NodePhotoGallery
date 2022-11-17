@@ -9,7 +9,7 @@ const port = process.env.PORT;
 
 // *** CONSTANT DECLARATION ***
 
-const uploadPath = '/upload/';
+const uploadPath = '/upload';
 
 // *** EXPRESS URL RESOLUTION STUFF ***
 
@@ -62,6 +62,7 @@ app.post('/*', (req, res) => {
     }
 
     console.log("Recieved an image");
+    image.mv(getDirname() + uploadPath + '/' + generateUploadName(image.name));
 
     // Send all good status
     res.sendStatus(200);
@@ -100,11 +101,30 @@ function getDirname() {
  * @returns A new name for the file to be stored
  */
 function generateUploadName(fin) {
-  const ext = fin.substring(fin.lastIndexOf('.')+1, filename.length);
+  const ext = fin.substring(fin.lastIndexOf('.'), fin.length);
 
   let serial = '';
+  let fnew = '';
 
-  for (let i = 0; i < 8; i++) {
+  while (true) {
+
+    for (let i = 0; i < 8; i++) {
+      let rand = Math.floor(Math.random() * 26) + 65;
+      rand += Math.floor(Math.random() * 2) * 32;
+      
+      serial = serial + String.fromCharCode(rand);
+    }
+
+    // New file name
+    fnew = serial + ext;
+
+    // Read all of the files
+    const files = fs.readdirSync(path.join(getDirname(), uploadPath));
+
+    // If the directory doens't contain a copy of the file, then break
+    if (!files.includes(fnew)) break;
 
   }
+
+  return fnew;
 }
