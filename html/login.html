@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <script src="./login.js"></script>
     <title>Photo Gallery 317</title>
     <style>
         body{
@@ -63,7 +64,7 @@
 
     <h3>
         <label for="uname"><b style="color:black">Username: </b></label>
-        <input id="usName" type="text" placeholder="Enter Username" name="uname" required>
+        <input id="uName" type="text" placeholder="Enter Username" name="uname" required>
     </h3>
 
     <h3>
@@ -71,8 +72,8 @@
         <input id="uPass" type="text" placeholder="Enter Password" name="upass" required>
     </h3>
 
-    <form action="/">
-        <button type="submit" class="loginBtn">Login</button>
+    <form>
+        <button type="submit" class="loginBtn" onclick="login()">Login</button>
     </form>
     <form action="/register">
         <button type="submit" class="newUser">New User</button>
