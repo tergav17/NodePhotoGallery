@@ -71,7 +71,7 @@ app.get('/*', (req, res) => {
   
   // New User Page
   else if (req.path == '/register') {
-    fsend(res, 'html/newUser.html');
+    fsend(res, 'html/register.html');
   } 
 
   // Search page
@@ -82,7 +82,7 @@ app.get('/*', (req, res) => {
     if (!checkToken(tid)) {
       return res.redirect('/login');
     }
-    
+
     fsend(res, 'html/search.html');
   } 
 
@@ -115,7 +115,7 @@ app.get('/*', (req, res) => {
 app.post('/*', (req, res) => {
 
   // General image upload portal here
-  if(req.path == '/upload') {
+  if(req.path == '/post/upload') {
     // Grab an image (if it exists) out of the attached file
     const { image } = req.files;
     
@@ -167,7 +167,7 @@ app.post('/*', (req, res) => {
   }
 
   // Username password authentication
-  else if (req.path == '/auth') {
+  else if (req.path == '/post/login') {
     const body = req.body;
 
     let response = {valid:false, token:-1};
@@ -181,7 +181,7 @@ app.post('/*', (req, res) => {
   }
 
   // User creation endpoint
-  else if (req.path == "/new") {
+  else if (req.path == "/post/register") {
     const body = req.body;
 
     let response = {valid:false, token:-1};
@@ -200,7 +200,7 @@ app.post('/*', (req, res) => {
   }
 
   // File search endpoint
-  else if (req.path == "/lookup") {
+  else if (req.path == "/post/search") {
     const body = req.body;
 
     let response = [];
@@ -224,7 +224,7 @@ app.post('/*', (req, res) => {
           let tags = image.tags;
 
           if (tags.toLowerCase().indexOf(body.query.toLowerCase()) !== -1)
-            response.push(image.imageName);
+            response.push(image);
         }
       }
     }

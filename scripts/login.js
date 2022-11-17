@@ -3,7 +3,7 @@ function login(){
 	let userNameInput = document.getElementById("uName");
     let passwordInput  = document.getElementById("uPass");	
 	
-	fetch("/auth", {
+	fetch("/post/login", {
 		method: "POST",
 		headers: {'Content-Type': 'application/json'}, 
 		body: "{ \"username\": \"" + userNameInput.value + "\", \"password\": \"" + passwordInput.value + "\" }"
