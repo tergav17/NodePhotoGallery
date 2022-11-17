@@ -71,7 +71,7 @@ app.get('/*', (req, res) => {
   
   // New User Page
   else if (req.path == '/register') {
-    fsend(res, 'html/newUser.html');
+    fsend(res, 'html/register.html');
   } 
 
   // Search page
@@ -224,7 +224,7 @@ app.post('/*', (req, res) => {
           let tags = image.tags;
 
           if (tags.toLowerCase().indexOf(body.query.toLowerCase()) !== -1)
-            response.push(image.imageName);
+            response.push(image);
         }
       }
     }
