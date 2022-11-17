@@ -2,9 +2,8 @@ function login(){
     //let bool = validateLogin();
     // if (bool) window.location.href = "index.html";
 
-    document.getElementById("uname").innerText = "Invalid";
     
-	/*let userNameInput = document.getElementById("uName");
+	let userNameInput = document.getElementById("uName");
     let passwordInput  = document.getElementById("uPass");	
 	
 	if (bool) fetch("/login", {
@@ -18,8 +17,9 @@ function login(){
 
             // storeUser(userNameInput); //need this function from index.js
 		} else {
-            document.getElementById("uname").innerText = "Invalid";
-			document.getElementById("upass").innerText = "";
+            document.getElementById("title").innerText = "Please Enter Valid Login";
+			//document.getElementById("uPass").innerText = "";
+
 		}
-	});*/
+	});
 }
