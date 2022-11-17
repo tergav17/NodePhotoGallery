@@ -186,7 +186,7 @@ app.post('/*', (req, res) => {
 
     let response = {valid:false, token:-1};
 
-    if (!checkUser(body.username)) {
+    if (!checkUser(body.username) && (body.username.length > 0 && body.password.length > 3)) {
       let newUser = {username:body.username, password:body.password, images:[]};
 
       userDatabase.push(newUser);
