@@ -149,6 +149,7 @@ app.post('/*', (req, res) => {
     res.send(response);
   }
 
+  // User creation endpoint
   else if (req.path == "/new") {
     const body = req.body;
 
