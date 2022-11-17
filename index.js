@@ -23,6 +23,23 @@ let tokens = [];
 
 let userDatabase = JSON.parse(fs.readFileSync(getDirname() + jsonPath + '/users.json'));
 
+/**
+ * Looks through all of the users and deletes any images that no longer exists
+ */
+function untrackDeletedImages() {
+  // Iterate through users
+  for (const user of userDatabase) {
+    for (let i = 0; i < user.images.length; i++) {
+      if (!checkUploadName(user.images[i].imageName)) {
+        user.images.splice(i);
+        i--;
+      }
+    }
+  }
+}
+untrackDeletedImages();
+updateUserDatabase();
+
 // *** EXPRESS URL RESOLUTION STUFF ***
 
 app.use(fileUpload());
@@ -163,6 +180,39 @@ app.post('/*', (req, res) => {
 
       response.token = authenticateUser(body.username);
       response.valid = true;
+    }
+
+    res.send(response);
+  }
+
+  // File search endpoint
+  else if (req.path == "/lookup") {
+    const body = req.body;
+
+    let response = [];
+
+    const tid = parseInt(req.cookies.token);
+
+    let username = '';
+    
+    // Authenticate user and get username
+    if (!checkToken(tid)) {
+      console.log("Invalid token " + tid);
+      return res.redirect('/error');
+    } else {
+      username = getUsername(tid);
+    }
+    
+    // Lookup relevant images
+    for (const user of userDatabase) {
+      if (user.username == username) {
+        for (const image of user.images) {
+          let tags = image.tags;
+
+          if (tags.toLowerCase().indexOf(body.query.toLowerCase()) !== -1)
+            response.push(image.imageName);
+        }
+      }
     }
 
     res.send(response);
