@@ -10,10 +10,15 @@ const port = process.env.PORT;
 // *** CONSTANT DECLARATION ***
 
 const uploadPath = '/upload';
+const jsonPath = '/json';
+
+// *** GLOBAL DECLARATION ***
+
+let tokens = [];
 
 // *** SETUP JSON OBJECTS ***
 
-
+let userDatabase = JSON.parse(fs.readFileSync(getDirname() + jsonPath + '/users.json'));
 
 // *** EXPRESS URL RESOLUTION STUFF ***
 
@@ -36,6 +41,16 @@ app.get('/*', (req, res) => {
   // New User Page
   else if (req.path == '/register') {
     fsend(res, 'html/newUser.html');
+  } 
+
+  // Search page
+  else if (req.path == '/search') {
+    fsend(res, 'html/search.html');
+  } 
+
+  // Error page
+  else if (req.path == '/error') {
+    fsend(res, 'html/error.html');
   } 
 
   // Serve an Image
@@ -96,6 +111,42 @@ function fsend(res, file) {
 }
 
 // *** LOGIN SERVICE STUFF ***
+
+/**
+ * Checks if a user exists or not
+ * @param {*} uname User name
+ * @returns If a user exists
+ */
+function doesUserExist(uname) {
+  // Iterate over database
+  for (const user of userDatabase)
+    if (user.username == uname) return true;
+
+  return false;
+}
+
+/**
+ * Checks if a user can log in with a password
+ * @param {*} uname Username 
+ * @param {*} pass Password
+ * @returns True if they match
+ */
+function checkUserPassword(uname, pass) {
+// Iterate over database
+  for (const user of userDatabase) 
+    if (user.username == uname && user.password == pass) return true; 
+
+  return false;
+}
+
+/**
+ * 
+ * @param {*} uname 
+ * @param {*} pass 
+ */
+function authenticateUser(uname, pass) {
+
+}
 
 // *** GENERAL UTILITY FUNCTIONS ***
 

@@ -1,5 +1,11 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# Custom folders
+upload/*
+!upload/dummy
+json/*
+!json/dummy
+
 # compiled output
 /dist
 /tmp
@@ -22,11 +28,6 @@ coverage
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
-# Custom folders
-upload/*
-!upload/dummy
-json/*
-!json/dummy
 
 # Bower dependency directory (https://bower.io/)
 bower_components
