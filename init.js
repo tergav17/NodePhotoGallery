@@ -6,9 +6,9 @@ console.log('Setting up login JSON...');
 
 let userDatabase = [];
 
-let dummyUser = {username:'test', password:'pass', images:[]};
+// let dummyUser = {username:'test', password:'pass', images:[]};
 
-userDatabase[0] = dummyUser;
+// userDatabase[0] = dummyUser;
 
 console.log("Writing JSON file...");
 

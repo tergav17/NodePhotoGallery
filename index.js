@@ -54,6 +54,13 @@ app.use(cookies());
 app.get('/*', (req, res) => {
   // Default page
   if (req.path == '/') {
+    const tid = parseInt(req.cookies.token);
+
+    // Authenticate user or redirect
+    if (!checkToken(tid)) {
+      return res.redirect('/login');
+    }
+
     fsend(res, 'html/home.html');
   } 
   
@@ -69,6 +76,13 @@ app.get('/*', (req, res) => {
 
   // Search page
   else if (req.path == '/search') {
+    const tid = parseInt(req.cookies.token);
+
+    // Authenticate user or redirect
+    if (!checkToken(tid)) {
+      return res.redirect('/login');
+    }
+    
     fsend(res, 'html/search.html');
   } 
 

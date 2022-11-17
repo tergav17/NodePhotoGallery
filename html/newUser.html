@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <script src="src/newUser.js"></script>
     <title>Photo Gallery 317</title>
     <style>
         body{
@@ -54,6 +55,13 @@
         .content {
                 text-align: center;
         }
+
+        .error{
+                font-size: small;
+                color: rgb(143, 1, 1);
+                margin-top: 0em; 
+                margin-bottom: 0em;
+        }
     </style>
 </head>
 
@@ -63,7 +71,7 @@
 
     <h3>
         <label for="uname"><b style="color:black">Username: </b></label>
-        <input id="usName" type="text" placeholder="Enter Username" name="uname" required>
+        <input id="uName" type="text" placeholder="Enter Username" name="uname" required>
     </h3>
 
     <h3>
@@ -72,13 +80,18 @@
     </h3>
 
     <h3>
-        <label for="upass2"><b style="color: rgb(172, 210, 249)">--------------- </b></label>
-        <input id="uPass2" type="text" placeholder="Re-Enter Password " name="upass2" required>
+        <label for="upassconf"><b style="color: rgb(172, 210, 249)">--------------- </b></label>
+        <input id="uPassConf" type="text" placeholder="Re-Enter Password " name="upass2" required>
     </h3>
 
-    <form action="/">
-        <button type="submit" class="createLogin">Create Login</button>
-    </form>
+    <p id="registerError" class="error"></p>
+
+    <button class="newUser" onClick="register()">Register User</button>
+
+    <br>
+    <a href="/login">
+        <button type="submit" class="newUser">Back to Login</button>
+    </a>
 
 
 

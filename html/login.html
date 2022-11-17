@@ -52,8 +52,16 @@
         button:hover {
             opacity: .8;
         }
+
         .content {
                 text-align: center;
+        }
+
+        .error{
+                font-size: small;
+                color: rgb(143, 1, 1);
+                margin-top: 0em; 
+                margin-bottom: 0em;
         }
     </style>
 </head>
@@ -72,10 +80,12 @@
         <input id="uPass" type="text" placeholder="Enter Password" name="upass" required>
     </h3>
 
+    <p id="loginError" class="error"></p>
 
     <button class="newUser" onClick="login()">Login</button>
 
-    <form action="/register">
+    <br>
+    <a href="/register">
         <button type="submit" class="newUser">New User</button>
     </form>
 

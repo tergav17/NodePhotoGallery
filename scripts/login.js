@@ -1,25 +1,20 @@
 function login(){
-    //let bool = validateLogin();
-    // if (bool) window.location.href = "index.html";
 
-    
 	let userNameInput = document.getElementById("uName");
     let passwordInput  = document.getElementById("uPass");	
 	
-	if (bool) fetch("/login", {
+	fetch("/auth", {
 		method: "POST",
 		headers: {'Content-Type': 'application/json'}, 
 		body: "{ \"username\": \"" + userNameInput.value + "\", \"password\": \"" + passwordInput.value + "\" }"
 	}).then(response => response.json()).then(data => {
-		if (data.valid == "true") {
-            document.cookie = data.token;
-            window.location.href = "index.html"
-
-            // storeUser(userNameInput); //need this function from index.js
+		if (data.valid == true) {
+            document.cookie = "token="+data.token.id+";";
+            window.location.href = "/"
 		} else {
-            document.getElementById("title").innerText = "Please Enter Valid Login";
-			//document.getElementById("uPass").innerText = "";
+            document.getElementById("loginError").innerText = "Please Enter Valid Login";
 
+			console.log("Non valid login");
 		}
 	});
 }
