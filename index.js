@@ -1,5 +1,7 @@
 import express from 'express';
 import fileUpload from 'express-fileupload';
+import bodyParser from 'body-parser';
+import cookies from 'cookie-parser';
 import path from 'path';
 import url from 'url';
 import fs from 'fs';
@@ -24,6 +26,10 @@ let userDatabase = JSON.parse(fs.readFileSync(getDirname() + jsonPath + '/users.
 // *** EXPRESS URL RESOLUTION STUFF ***
 
 app.use(fileUpload());
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
+app.use(cookies());
 
 /**
  * We handle HTTP get requests here
@@ -58,7 +64,7 @@ app.get('/*', (req, res) => {
   else if (req.path.startsWith('/u/')) {
     const imgName = req.path.substring(3);
 
-    fsend(res, uploadPath + imgName);
+    fsend(res, uploadPath + '/' + imgName);
   }
 
   // Serve a Script
@@ -82,24 +88,83 @@ app.post('/*', (req, res) => {
     // Grab an image (if it exists) out of the attached file
     const { image } = req.files;
     
+    const tid = parseInt(req.cookies.token);
+
+    let username = '';
+
+    // Authenticate user and get username
+    if (!checkToken(tid)) {
+      console.log("Invalid token " + tid);
+      return res.redirect('/error');
+    } else {
+      username = getUsername(tid);
+    }
+
     // Check to see if it exists
     if (!image) {
       console.log("Empty upload detected!");
-      return res.sendStatus(400);
+      return res.redirect('/error');
     }
 
     // Make sure it is actually an image
     if (!/image/.test(image.mimetype)) {
       console.log('Non-image upload detected!');
       console.log('Image mimetype: ' + image.mimetype);
-      return res.sendStatus(400);
+      return res.redirect('/error');
     }
 
-    console.log("Recieved an image");
-    image.mv(getDirname() + uploadPath + '/' + generateUploadName(image.name));
+    console.log("Recieved an image for user " + username + " with tages " + req.body.tags);
 
-    // Send all good status
-    res.sendStatus(200);
+    // Move it to the uploads directory
+    const uploadName = generateUploadName(image.name)
+    image.mv(getDirname() + uploadPath + '/' + uploadName);
+
+    // Lets add a record in the user array
+    for (const user of userDatabase) {
+      if (user.username == username) {
+        const imageRecord = {imageName:uploadName, tags:req.body.tags};
+
+        user.images.push(imageRecord);
+      }
+    }
+    updateUserDatabase();
+
+    // Redirect to image proper
+    // If I was had time, I would do like a viewer page
+    // but I do not
+    res.redirect('/u/' + uploadName);
+  }
+
+  // Username password authentication
+  else if (req.path == '/auth') {
+    const body = req.body;
+
+    let response = {valid:false, token:-1};
+
+    if (checkUserPassword(body.username, body.password)) {
+      response.token = authenticateUser(body.username);
+      response.valid = true;
+    }
+
+    res.send(response);
+  }
+
+  else if (req.path == "/new") {
+    const body = req.body;
+
+    let response = {valid:false, token:-1};
+
+    if (!checkUser(body.username)) {
+      let newUser = {username:body.username, password:body.password, images:[]};
+
+      userDatabase.push(newUser);
+      updateUserDatabase();
+
+      response.token = authenticateUser(body.username);
+      response.valid = true;
+    }
+
+    res.send(response);
   }
 });
 
@@ -121,11 +186,18 @@ function fsend(res, file) {
 // *** LOGIN SERVICE STUFF ***
 
 /**
+ * Writes new changes to the users.json file
+ */
+function updateUserDatabase() {
+  fs.writeFileSync(getDirname() + jsonPath + '/users.json', JSON.stringify(userDatabase));
+}
+
+/**
  * Checks if a user exists or not
  * @param {*} uname User name
  * @returns If a user exists
  */
-function doesUserExist(uname) {
+function checkUser(uname) {
   // Iterate over database
   for (const user of userDatabase)
     if (user.username == uname) return true;
@@ -150,11 +222,46 @@ function checkUserPassword(uname, pass) {
 /**
  * Authenticates a user, adds a token, and returns it
  * @param {*} uname Username
+ * @returns The new token
  */
 function authenticateUser(uname) {
-  let rand = Math.floor(Math.random() * 1000000000);
+  let rand = -1;
 
+  // Make a unique new random token
+  while (true) {
+    rand = Math.floor(Math.random() * 1000000000);
 
+    if(!checkToken(rand)) break;
+  }
+
+  let token = {id:rand, username:uname};
+  tokens.push(token);
+
+  return token;
+}
+
+/**
+ * Checks if a token is valid
+ * @param {*} tid Token ID
+ * @returns If a token is valid
+ */
+function checkToken(tid) {
+  for (const token of tokens)
+    if (token.id == tid) return true;
+
+  return false;
+}
+
+/**
+ * Returns the username attached to the token
+ * @param {*} tid Token ID
+ * @returns Username
+ */
+function getUsername(tid) {
+  for (const token of tokens)
+    if (token.id == tid) return token.username;
+
+  return 'missingno';
 }
 
 // *** GENERAL UTILITY FUNCTIONS ***
@@ -191,13 +298,22 @@ function generateUploadName(fin) {
     // New file name
     fnew = serial + ext;
 
-    // Read all of the files
-    const files = fs.readdirSync(path.join(getDirname(), uploadPath));
-
     // If the directory doens't contain a copy of the file, then break
-    if (!files.includes(fnew)) break;
+    if (!checkUploadName(fnew)) break;
 
   }
 
   return fnew;
+}
+
+/**
+ * Checks to see if a file name already exists in uploads
+ * @param {*} fin File name
+ * @returns If it exists
+ */
+function checkUploadName(fin) {
+  // Read all of the files
+  const files = fs.readdirSync(path.join(getDirname(), uploadPath));
+
+  return files.includes(fin);
 }

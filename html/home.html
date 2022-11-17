@@ -55,11 +55,12 @@
     <body style="background-color: rgb(172, 210, 249);">
         <h1 style="color:black">Upload a Photo</h1>
 
-        <!-- This is a dummyframe to avoid redirects when an upload occurs -->
-        <iframe name="dummy" id="dummy" style="display: none;"></iframe>
-
-        <form action="/upload" method="POST" enctype="multipart/form-data" target="dummy">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
             <input type="file" name="image" />
+            <br>
+            <br>
+            <label for="tags">Tags:</label>
+            <input type="text" id="tags" name="tags"><br><br>
             <button type="submit" class="uploadBtn">Upload</button>
         </form>
 
