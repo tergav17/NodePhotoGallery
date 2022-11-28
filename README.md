@@ -23,3 +23,8 @@ A simple Node.JS photo uploading and display app
     - Uploading an image will redirect you to a fullscreen view. Back out with the browser to return to the previous page.
     - Searching will ask you for a query. The page will return all images with that tag.
 3. Afterwards, you can log out, restart the app, and back in to see that both login and images persist.
+
+## Team
+- Gavin Tersteeg
+- Isaiah Mundy
+- Yadiel Johnson
