@@ -29,6 +29,14 @@ A simple Node.JS photo uploading and display app
     - Searching will ask you for a query. The page will return all images with that tag.
 3. Afterwards, you can log out, restart the app, and back in to see that both login and images persist.
 
+## Screenshots
+![](.screenshots/Screenshot_20221128_011539.png)
+![](.screenshots/Screenshot_20221128_011707.png)
+![](.screenshots/Screenshot_20221128_011840.png)
+![](.screenshots/Screenshot_20221128_011913.png)
+![](.screenshots/Screenshot_20221128_012039.png)
+
+
 ## Team
 - Gavin Tersteeg
 - Isaiah Mundy
