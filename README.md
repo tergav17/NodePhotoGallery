@@ -17,6 +17,11 @@ A simple Node.JS photo uploading and display app
 3. Run `node index.js`
 4. Open your browser and head to `{HOST-IP}:{PORT}`. If this instance is running locally and the `PORT` environment variable is set to `8080`, then head to `localhost:8080`.
 
+### Alternatively
+
+0. Navigate to https://photogallery317.azurewebsites.net/
+1. You may need to wait a minute or two if Azure has decided to temporarily spin down the instance that the Node server is running on.
+
 ## How to use
 1. You will first see a `Login` screen. You will want to press the `New User` button to create an account. Fill in all the fields, and then press the `Register User` button.
 2. You can now log in. Afterwards, you'll see an `Upload a Photo` screen. You can upload any photo you wish alongside tags, or search for photos by tags.
