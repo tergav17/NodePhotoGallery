@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "init": "node init.js"
   },
   "author": "",
@@ -17,5 +17,8 @@
     "express-fileupload": "^1.4.0",
     "express-generator": "^4.14.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
   }
 }
