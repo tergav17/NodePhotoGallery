@@ -41,3 +41,4 @@ A simple Node.JS photo uploading and display app
 - Gavin Tersteeg
 - Isaiah Mundy
 - Yadiel Johnson
+- Sam Caldwell
