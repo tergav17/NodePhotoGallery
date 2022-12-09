@@ -93,7 +93,7 @@ app.get('/*', (req, res) => {
 
   // Unit test pag 
   else if (req.path == '/tests') {
-    dotest(res);
+    doTest(res);
   }
 
   // Serve an Image
@@ -396,6 +396,36 @@ function checkUploadName(fin) {
 
 // *** UNIT TEST FUNCTIONS ***
 
-function dotest(res) {
+/**
+ * Performs a number of tests on the application
+ * @param {*} res Express response
+ */
+function doTest(res) {
+  res.write("SE 317 Unit Testing Endpoint");
+  res.write("\n");
+  
 
+
+  res.end();
+}
+
+/**
+ * Asserts that a test is passing
+ * @param {*} res Express response
+ * @param {*} test Test label
+ * @param {*} result Result of test
+ * @param {*} expected Expected result
+ */
+function assertEqual(res, test, result, expected) {
+  res.write("TEST LABEL: " + test);
+  res.write("\n");
+
+  res.write("OUTCOME: " + result);
+  res.write("\n");
+
+  res.write("EXPECTED RESULT: " + expected);
+  res.write("\n");
+
+  res.write("TEST STATUS: " + (result == expected) ? "PASS" : "FAIL");
+  res.write("\n\n");
 }
