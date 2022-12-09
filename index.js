@@ -91,6 +91,11 @@ app.get('/*', (req, res) => {
     fsend(res, 'html/error.html');
   } 
 
+  // Unit test pag 
+  else if (req.path == '/tests') {
+    dotest(res);
+  }
+
   // Serve an Image
   else if (req.path.startsWith('/u/')) {
     const imgName = req.path.substring(3);
@@ -116,54 +121,60 @@ app.post('/*', (req, res) => {
 
   // General image upload portal here
   if(req.path == '/post/upload') {
-    // Grab an image (if it exists) out of the attached file
-    const { image } = req.files;
-    
-    const tid = parseInt(req.cookies.token);
 
-    let username = '';
+    try {
+      // Grab an image (if it exists) out of the attached file
+      const { image } = req.files;
+      
+      const tid = parseInt(req.cookies.token);
 
-    // Authenticate user and get username
-    if (!checkToken(tid)) {
-      console.log("Invalid token " + tid);
-      return res.redirect('/error');
-    } else {
-      username = getUsername(tid);
-    }
+      let username = '';
 
-    // Check to see if it exists
-    if (!image) {
-      console.log("Empty upload detected!");
-      return res.redirect('/error');
-    }
-
-    // Make sure it is actually an image
-    if (!/image/.test(image.mimetype)) {
-      console.log('Non-image upload detected!');
-      console.log('Image mimetype: ' + image.mimetype);
-      return res.redirect('/error');
-    }
-
-    console.log("Received an image for user " + username + " with tags: " + req.body.tags);
-
-    // Move it to the uploads directory
-    const uploadName = generateUploadName(image.name)
-    image.mv(getDirname() + uploadPath + '/' + uploadName);
-
-    // Lets add a record in the user array
-    for (const user of userDatabase) {
-      if (user.username == username) {
-        const imageRecord = {imageName:uploadName, tags:req.body.tags};
-
-        user.images.push(imageRecord);
+      // Authenticate user and get username
+      if (!checkToken(tid)) {
+        console.log("Invalid token " + tid);
+        return res.redirect('/error');
+      } else {
+        username = getUsername(tid);
       }
-    }
-    updateUserDatabase();
 
-    // Redirect to image proper
-    // If I was had time, I would do like a viewer page
-    // but I do not
-    res.redirect('/u/' + uploadName);
+      // Check to see if it exists
+      if (!image) {
+        console.log("Empty upload detected!");
+        return res.redirect('/error');
+      }
+
+      // Make sure it is actually an image
+      if (!/image/.test(image.mimetype)) {
+        console.log('Non-image upload detected!');
+        console.log('Image mimetype: ' + image.mimetype);
+        return res.redirect('/error');
+      }
+
+      console.log("Received an image for user " + username + " with tags: " + req.body.tags);
+
+      // Move it to the uploads directory
+      const uploadName = generateUploadName(image.name)
+      image.mv(getDirname() + uploadPath + '/' + uploadName);
+
+      // Lets add a record in the user array
+      for (const user of userDatabase) {
+        if (user.username == username) {
+          const imageRecord = {imageName:uploadName, tags:req.body.tags};
+
+          user.images.push(imageRecord);
+        }
+      }
+      updateUserDatabase();
+
+      // Redirect to image proper
+      // If I was had time, I would do like a viewer page
+      // but I do not
+      res.redirect('/u/' + uploadName);
+    } catch {
+      // If something goes wrong with file uploading, just dump over to error
+      return res.redirect('/error');
+    }
   }
 
   // Username password authentication
@@ -381,4 +392,10 @@ function checkUploadName(fin) {
   const files = fs.readdirSync(path.join(getDirname(), uploadPath));
 
   return files.includes(fin);
+}
+
+// *** UNIT TEST FUNCTIONS ***
+
+function dotest(res) {
+
 }

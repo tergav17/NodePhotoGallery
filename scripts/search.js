@@ -22,6 +22,9 @@ function search(){
             var elem = document.createElement("img");
             elem.setAttribute("src", "/u/" + image.imageName);
             results.appendChild(elem);
+
+            var br = document.createElement("br");
+            results.appendChild(br);
         }
 	});
 
